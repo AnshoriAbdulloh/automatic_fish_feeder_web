@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: dmSans;
+  src: url(./assets/font/DMSans-Medium.ttf);
+}
+
+@font-face {
+  font-family: samsung;
+  src: url(.assets/font/samsungsharpsans-bold.otf);
+}
+
+@font-face {
+  font-family: samsung-medium;
+  src: url(./assets/font/samsungsharpsans-medium.otf);
+}
+
+@theme {
+  --font-dmSans: dmSans;
+  --font-samsung: samsung;
+  --font-samsung-medium: samsung-medium;
+}
