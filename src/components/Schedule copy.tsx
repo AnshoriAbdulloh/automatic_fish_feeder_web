@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
-import { ref, onValue } from "firebase/database";
+import { useLocation } from "react-router-dom";
+import { ref, onValue, remove, update } from "firebase/database";
 import { db } from "../firebase/firebase.ts";
 import type { JadwalMakan } from "../types/jadwal.ts";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 export default function Schedule() {
+  const location = useLocation();
+  const isEditable = location.pathname === "/schedule";
   const [jadwal, setJadwal] = useState<JadwalMakan[]>([]);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await remove(ref(db, `jadwal/${id}`));
+      console.log("Berhasil hapus");
+    } catch (error) {
+      console.log("Gagal hapus", error);
+    }
+  };
 
   useEffect(() => {
     const jadwalRef = ref(db, "jadwal_makan");
@@ -41,9 +54,15 @@ export default function Schedule() {
       {jadwal.map((item) => (
         <p
           key={item.id}
-          className={`cursor-pointer text-md py-2 px-3 rounded-xl hover:bg-gray-200`}
+          className={`flex items-center gap-2 text-md py-2 px-3 rounded-xl hover:bg-gray-200`}
         >
           {item.jam}
+          <MdDelete
+            className={`ml-auto inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-red-500`}
+          />
+          <MdEdit
+            className={`inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-green-500`}
+          />
         </p>
       ))}
     </div>
