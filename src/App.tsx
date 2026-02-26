@@ -68,7 +68,7 @@ export default function App() {
               }
             />
             <Route path='/schedule' element={<Schedule />} />
-            <Route path='/history' element={<History />} />
+            <Route path='/history' element={<History editable={true} />} />
           </Routes>
           <div
             onClick={() => setIsOpen(!isOpen)}

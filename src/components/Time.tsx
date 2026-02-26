@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import { onValue, ref } from "firebase/database";
 
+import Clock from "../assets/image/clock.png";
+
 export default function Time() {
   const [rtcTime, setRtcTime] = useState<string>("--:--");
 
@@ -29,16 +31,18 @@ export default function Time() {
       <div
         className={`flex-1 flex flex-col justify-end items-center shrink rounded-xl border border-black/30 font-samsung-medium p-4 bg-white`}
       >
+        <img src={Clock} alt='Clock' className={`max-w-25 mb-2`} />
         <span className={`text-sm mb-1`}>LOCAL TIME</span>
-        <h1 className={`text-5xl`}>
+        <h1 className={`sm:text-5xl text-4xl`}>
           <DigitalClock />
         </h1>
       </div>
       <div
         className={`flex-1 flex flex-col justify-end items-center shrink rounded-xl border border-black/30 font-samsung-medium p-4 bg-white`}
       >
+        <img src={Clock} alt='Clock' className={`max-w-25 mb-2`} />
         <span className={`text-sm mb-1`}>RTC TIME</span>
-        <h1 className={`text-5xl`}>{rtcTime}</h1>
+        <h1 className={`sm:text-5xl text-4xl`}>{rtcTime}</h1>
       </div>
     </div>
   );

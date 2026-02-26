@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ref, onValue, remove, update } from "firebase/database";
+import { ref, onValue, remove, set } from "firebase/database";
 import { db } from "../firebase/firebase.ts";
 import type { JadwalMakan } from "../types/jadwal.ts";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -11,11 +11,26 @@ export default function Schedule() {
   const [jadwal, setJadwal] = useState<JadwalMakan[]>([]);
 
   const handleDelete = async (id: string) => {
+    const confirmDelete = confirm("Yakin nonaktifkan jadwal ini?");
+    if (!confirmDelete) return;
+
     try {
-      await remove(ref(db, `jadwal/${id}`));
-      console.log("Berhasil hapus");
+      await set(ref(db, `jadwal_makan/${id}`), "---");
+      console.log("Berhasil nonaktifkan");
     } catch (error) {
-      console.log("Gagal hapus", error);
+      console.error("Gagal:", error);
+    }
+  };
+  const handleEdit = async (id: string, currentJam: string) => {
+    const newJam = prompt("Edit jam makan", currentJam);
+
+    if (!newJam) return;
+
+    try {
+      await set(ref(db, `jadwal_makan/${id}`), newJam);
+      console.log(`Berhasil update`);
+    } catch (error) {
+      console.error(`Gagal update:`, error);
     }
   };
 
@@ -56,13 +71,19 @@ export default function Schedule() {
           key={item.id}
           className={`flex items-center gap-2 text-md py-2 px-3 rounded-xl hover:bg-gray-200`}
         >
-          {item.jam}
-          <MdDelete
-            className={`ml-auto inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-red-500`}
-          />
-          <MdEdit
-            className={`inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-green-500`}
-          />
+          {item.jam}{" "}
+          {isEditable && (
+            <>
+              <MdDelete
+                onClick={() => handleDelete(item.id)}
+                className={`ml-auto inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-red-500`}
+              />
+              <MdEdit
+                onClick={() => handleEdit(item.id, item.jam)}
+                className={`inline hover:opacity-75 cursor-pointer box-content rounded-sm p-1 bg-green-500`}
+              />
+            </>
+          )}
         </p>
       ))}
     </div>
