@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ref, onValue, remove, set } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 import { db } from "../firebase/firebase.ts";
 import type { JadwalMakan } from "../types/jadwal.ts";
 import { MdDelete, MdEdit } from "react-icons/md";

@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import NextTimeFeed from "./components/NextTimeFeed";
 import Time from "./components/Time";
 import History from "./components/History";
-import Schedule from "./components/Schedule copy";
+import Schedule from "./components/Schedule";
 import Feed from "./components/Feed";
 
 export default function App() {
